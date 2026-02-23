@@ -2,8 +2,6 @@
 
 A Python script designed for professional-grade sitemap reconnaissance. It utilizes a four-tier escalation architecture combined with automatic path traversal to maximize discovery while minimizing its forensic footprint.
 
-Wrapped in a Nix shell to guarantee reproducible dependency isolation.
-
 ## Core Features
 
 ### 1. The Escalation Architecture
@@ -23,10 +21,10 @@ Wrapped in a Nix shell to guarantee reproducible dependency isolation.
 
 ### 2. Upward Path Traversal
 
-If you supply a deep URL route (e.g., `https://ld.iobit.com/de/giveaway/`), the tool automatically deconstructs the path into a traversal vector:
-1.  `https://ld.iobit.com/de/giveaway/`
-2.  `https://ld.iobit.com/de/`
-3.  `https://ld.iobit.com/`
+If you supply a deep URL route (e.g., `https://target.com/de/giveaway/`), the tool automatically deconstructs the path into a traversal vector:
+1.  `https://target.com/de/giveaway/`
+2.  `https://target.com/de/`
+3.  `https://target.com/`
 
 It executes the escalation tiers (1, 3, and 4) *in sequence at every depth level*, working its way upwards to the root domain until a sitemap is discovered or the domain is exhausted.
 
@@ -39,11 +37,13 @@ It executes the escalation tiers (1, 3, and 4) *in sequence at every depth level
 
 ## Usage
 
-### 1. Enter the Environment
-Ensure you have the Nix package manager installed.
+### 1. Install Dependencies
+Ensure you have Python 3 installed, then install the required packages:
 ```bash
-nix-shell
+pip install -r requirements.txt
 ```
+
+*(Note for NixOS users: A `shell.nix` is provided for isolated environment execution).*
 
 ### 2. Execute the Hunt
 
@@ -54,7 +54,7 @@ python sitemap_hunter.py example.com
 
 **Deep Path Target (Triggers Traversal Engine)**
 ```bash
-python sitemap_hunter.py https://ld.iobit.com/de/giveaway/
+python sitemap_hunter.py https://target.com/de/giveaway/
 ```
 
 **Custom Payload (Overrides default taxonomy)**
